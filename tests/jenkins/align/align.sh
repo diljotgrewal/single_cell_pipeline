@@ -1,17 +1,19 @@
 #!/bin/bash
 
+ORG=$1
+
 TAG=`git describe --tags $(git rev-list --tags --max-count=1)`
 
 
 mkdir -p ALIGN/tumourfastq
 
-docker run -v $PWD:$PWD -w $PWD singlecellpipeline/azurecli:v0.0.1 \
+docker run -v $PWD:$PWD -w $PWD $ORG/azurecli:v0.0.1 \
   az storage blob download-batch -s tumourfastq -d ALIGN/tumourfastq --account-name $1 --account-key $2
 
 
 docker run -w $PWD -v $PWD:$PWD -v /refdata:/refdata -v /var/run/docker.sock:/var/run/docker.sock \
   -v /usr/bin/docker:/usr/bin/docker --rm \
-  singlecellpipeline/single_cell_pipeline:$TAG \
+  $ORG/single_cell_pipeline:$TAG \
   single_cell alignment --input_yaml tests/jenkins/align/inputs.yaml \
   --library_id A97318A --maxjobs 4 --nocleanup --sentinel_only  \
   --context_config tests/jenkins/align/context_config.yaml \
@@ -22,7 +24,7 @@ docker run -w $PWD -v $PWD:$PWD -v /refdata:/refdata -v /var/run/docker.sock:/va
 
 docker run -w $PWD -v $PWD:$PWD -v /refdata:/refdata -v /var/run/docker.sock:/var/run/docker.sock \
   -v /usr/bin/docker:/usr/bin/docker --rm \
-  singlecellpipeline/single_cell_pipeline:$TAG \
+  $ORG/single_cell_pipeline:$TAG \
   python tests/jenkins/align/test_alignment.py ALIGN/output A97318A  ALIGN/ref_test_data/refdata
 
 
