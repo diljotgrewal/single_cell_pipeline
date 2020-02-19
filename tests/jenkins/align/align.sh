@@ -3,7 +3,7 @@
 TAG=`git describe --tags $(git rev-list --tags --max-count=1)`
 
 
-mkdir -p ALIGN/tumourfastq
+mkdir -p ALIGN/ref_test_data
 
 docker run -v $PWD:$PWD -w $PWD $3/azurecli:v0.0.1 \
   az storage blob download-batch -s alignment -d ALIGN/ref_test_data --account-name $1 --account-key $2
