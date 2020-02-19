@@ -28,4 +28,4 @@ docker run -w $PWD -v $PWD:$PWD -v /refdata:/refdata -v /var/run/docker.sock:/va
   python tests/jenkins/align/test_alignment.py ALIGN/output A97318A  ALIGN/ref_test_data/refdata
 
 
-rm -rf ALIGN
+docker run -w $PWD -v $PWD:$PWD --rm $ORG/single_cell_pipeline:$TAG rm -rf ALIGN
