@@ -9,4 +9,4 @@ docker login -u $1 --password $2
 echo "\n RUN DOCKER \n"
 sh docker/single_cell_pipeline/run.sh docker.io singlecellpipelinetest
 
-sh docker/scgenome/run.sh docker.io
+sh docker/scgenome/run.sh docker.io singlecellpipelinetest
