@@ -18,3 +18,12 @@ docker run -w $PWD -v $PWD:$PWD -v /refdata:/refdata -v /var/run/docker.sock:/va
   --submit local --loglevel DEBUG \
   --config_override '{"pypeliner_storage_account": "scdnadev"}' --tmpdir ALIGN/temp \
   --pipelinedir ALIGN/pipeline --submit local --out_dir ALIGN/output --bams_dir ALIGN/bams
+
+
+docker run -w $PWD -v $PWD:$PWD -v /refdata:/refdata -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /usr/bin/docker:/usr/bin/docker --rm \
+  singlecellpipeline/single_cell_pipeline:$TAG \
+  python tests/jenkins/align/test_alignment.py ALIGN/output A97318A  ALIGN/ref_test_data/refdata
+
+
+rm -rf ALIGN
