@@ -23,7 +23,7 @@ pipeline{
          parallel{
              stage('align'){
                  steps{
-                   sh 'bash tests/jenkins/align/align.sh singlecelltestsets $SINGLECELLTESTSETS'
+                   sh 'bash tests/jenkins/align/align.sh singlecelltestsets $SINGLECELLTESTSETS singlecellpipelinetest'
                  }
              }
            //  stage('hmmcopy'){
